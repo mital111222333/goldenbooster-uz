@@ -3,16 +3,23 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  // ---- nav: transparent over dark openings, compact rail after scroll
-  var nav = $("#nav");
-  var opening = $(".hero, .dark-open");
-  if (!opening) nav.classList.add("solid");
-  function onScroll() {
-    var limit = opening ? opening.offsetHeight - 90 : 40;
-    nav.classList.toggle("scrolled", window.scrollY > limit);
+  // ---- Liquid Glass intensity
+  var gr = $("#grange"), gc = $("#gctl");
+  try { var sv = localStorage.getItem("gb-glass"); if (sv !== null) { document.documentElement.style.setProperty("--g", sv / 100); if (gr) gr.value = sv; } } catch (e) {}
+  if (gr) gr.addEventListener("input", function () {
+    document.documentElement.style.setProperty("--g", gr.value / 100);
+    try { localStorage.setItem("gb-glass", gr.value); } catch (e) {}
+  });
+  if (gc) $("#gbtn").addEventListener("click", function () { gc.classList.toggle("open"); });
+
+  // ---- scroll reveal
+  var rvEls = $$(".sec-head, .card, .wcard, .pcard, .tile, .cell, .chapter, .pr, .tl-item, .band, .bridge, .proof .side, .assure, .cat-block > h2, .ctable, .plant, .form, .cinfo");
+  if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+    rvEls.forEach(function (el) { el.classList.add("rv"); io.observe(el); });
   }
-  addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
 
   // ---- mobile menu
   var mm = $("#mmenu");
@@ -72,14 +79,14 @@
       var c = document.createElementNS(ns, "circle");
       c.setAttribute("cx", x.toFixed(1)); c.setAttribute("cy", y.toFixed(1));
       c.setAttribute("r", (0.6 + rnd() * 1.3).toFixed(2));
-      c.setAttribute("fill", rnd() < 0.12 ? "#c9861f" : "#1a1714");
+      c.setAttribute("fill", rnd() < 0.35 ? "#e9b54a" : "#6e6e73");
       c.setAttribute("opacity", (0.15 + crown * 0.6 * rnd()).toFixed(2));
       ps.appendChild(c);
     }
     [[20, 200], [1180, 200], [20, 120], [1180, 120]].forEach(function (p) {
       var l = document.createElementNS(ns, "path");
       l.setAttribute("d", "M" + (p[0] - 8) + " " + p[1] + " H" + (p[0] + 8));
-      l.setAttribute("stroke", "#b1aca6"); ps.appendChild(l);
+      l.setAttribute("stroke", "#424245"); ps.appendChild(l);
     });
   }
 
