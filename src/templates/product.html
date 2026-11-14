@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% from "_macros.html" import pcard %}
+{% set d = p[lang] %}
+{% block title %}{{ t.p_title|replace('{name}', p.name) }}{% endblock %}
+{% block desc %}{{ d.summary|truncate(160, True, '…') }}{% endblock %}
+{% block ogimg %}/assets/products/{{ p.image }}{% endblock %}
+{% block head %}
+<script type="application/ld+json">{{ {"@context": "https://schema.org", "@type": "Product", "name": p.name, "image": site ~ "/assets/products/" ~ p.image, "description": d.summary, "category": p.cat[lang], "brand": {"@type": "Brand", "name": "Golden Booster"}, "manufacturer": {"@type": "Organization", "name": "WORLD OIL KOREA Co., Ltd."}, "countryOfOrigin": "KR", "url": site ~ self_url}|tojson }}</script>
+{% endblock %}
+{% block content %}
+<section class="wrap page-head" style="padding-bottom:40px">
+  <nav class="crumbs" aria-label="breadcrumbs"><a href="{{ url() }}">{{ t.crumb_home }}</a><span>/</span><a href="{{ url('catalog') }}">{{ t.nav_catalog }}</a><span>/</span><a href="{{ url('catalog') }}#{{ p.cat.slug }}">{{ p.cat[lang] }}</a></nav>
+</section>
+
+<section class="wrap pd-top">
+  <div class="pd-img">
+    <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+    <img src="/assets/products/{{ p.image }}" alt="{{ p.name }}" width="469" height="408">
+    <span class="mark">MADE IN KOREA · WORLD OIL KOREA</span>
+  </div>
+  <div class="pd-info">
+    <div class="eyebrow"><i class="dotg"></i>{{ p.cat[lang] }}{% if p.series %} · {{ p.series }}{% endif %}</div>
+    <h1 class="serif">{{ p.name }}</h1>
+    <div class="pd-type">{{ d.type }}</div>
+    <p class="pd-sum">{{ d.summary }}</p>
+    {% if p.packaging %}
+    <div class="pack"><span class="eyebrow muted">{{ t.packaging }}</span>{% for v in p.packaging %}<span class="v">{{ v }}</span>{% endfor %}</div>
+    {% endif %}
+    <div class="pd-actions">
+      <a class="btn dark" href="{{ url('contacts') }}?product={{ p.name|urlencode }}">{{ t.ask_price }}</a>
+      <a class="btn ghost" href="{{ url('catalog') }}#{{ p.cat.slug }}">← {{ p.cat[lang] }}</a>
+    </div>
+
+    {% if d.features %}
+    <div class="pd-sec"><div class="bracket"></div><div class="eyebrow">{{ t.features }}</div>
+      <ul class="feat">{% for f in d.features %}<li>{{ f }}</li>{% endfor %}</ul></div>
+    {% endif %}
+    {% if d.specs %}
+    <div class="pd-sec"><div class="bracket"></div><div class="eyebrow">{{ t.specs }}</div>
+      <p class="specs">{{ d.specs }}</p></div>
+    {% endif %}
+    {% if d.usage %}
+    <div class="pd-sec"><div class="bracket"></div><div class="eyebrow">{{ t.usage }}</div>
+      <div class="usage">{% for line in d.usage.split('\n') if line %}<p>{{ line }}</p>{% endfor %}</div></div>
+    {% endif %}
+    <p class="note">{{ t.p_note }}</p>
+    <div class="pd-sec"><div class="bracket"></div>
+      <div class="pd-req"><div><h2 class="serif" style="font-size:32px;line-height:1.15">{{ t.p_req_h }}</h2><p style="opacity:.7;margin-top:10px;font-size:16px">{{ t.p_req_p }}</p></div>
+      <a class="btn dark" href="{{ url('contacts') }}?product={{ p.name|urlencode }}">{{ t.request_price }}</a></div>
+      <div class="bracket bottom"></div></div>
+  </div>
+</section>
+
+{% if related %}
+<section class="wrap sec">
+  <h2 class="serif h-sec" style="margin-bottom:32px">{{ t.related }}</h2>
+  <div class="pgrid">{% for q in related[:4] %}{{ pcard(q, lang, url) }}{% endfor %}</div>
+</section>
+{% endif %}
+{% endblock %}

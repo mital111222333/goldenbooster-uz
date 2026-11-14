@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ t.nf_title }} — {{ t.site_name }}{% endblock %}
+{% block head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<section class="nf">
+  <div class="num">404</div>
+  <h1 class="serif">{{ t.nf_h }}</h1>
+  <p>{{ t.nf_p }} / {{ T_ru_nf if T_ru_nf is defined else 'Страница не найдена.' }}</p>
+  <a class="btn dark" href="/">{{ t.nf_btn }}</a>
+</section>
+{% endblock %}
+{% block close %}{% endblock %}

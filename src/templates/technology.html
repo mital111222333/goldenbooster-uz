@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% from "_macros.html" import stage %}
+{% block title %}{{ t.tech_title }}{% endblock %}
+{% block desc %}{{ t.tech_desc }}{% endblock %}
+{% block content %}
+<section class="dark-open">
+  <svg class="orbit" viewBox="0 0 1100 520" aria-hidden="true">
+    <ellipse cx="550" cy="260" rx="520" ry="200" fill="none" stroke="rgba(255,255,255,.18)"/>
+    <ellipse cx="550" cy="260" rx="380" ry="250" fill="none" stroke="rgba(255,255,255,.12)" stroke-dasharray="3 6"/>
+    <path d="M0 260 H120 M980 260 H1100" stroke="rgba(255,255,255,.25)"/><circle cx="120" cy="260" r="2.5" fill="#fff"/><circle cx="980" cy="260" r="2.5" fill="#fff"/>
+  </svg>
+  <div class="wrap" style="position:relative">
+    <div class="eyebrow">{{ t.tech_eyebrow }}</div>
+    <h1 class="serif">{{ t.tech_h1 }}</h1>
+    <p>{{ t.tech_lead }}</p>
+  </div>
+</section>
+
+<section class="wrap chapters">
+  {% for ch in t.chapters %}
+  <article class="chapter">
+    <div class="diag"><div class="horizon"></div><div class="grain" style="opacity:.08"></div>
+      {% if loop.index0 == 0 %}
+      <svg viewBox="0 0 522 420" aria-hidden="true">
+        <path class="ln" d="M180 30 V380"/><path class="ln dim" d="M172 30 V380 M188 30 V380"/>
+        <path d="M60 370 Q110 365 140 320 Q160 300 168 340 Q172 360 176 370" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.4)"/>
+        <text x="60" y="404" fill="rgba(255,255,255,.55)" font-family="Space Grotesk" font-size="11">NORMAL OIL</text>
+        <path class="ln" d="M380 30 V380"/><path class="ln dim" d="M372 30 V380 M388 30 V380"/>
+        <path class="oil" d="M290 372 Q340 370 360 320 Q370 230 372 150 L388 150 Q390 230 400 320 Q420 370 470 372 Z"/>
+        <path class="ln dash" d="M300 150 H360"/><circle class="dt" cx="372" cy="150" r="2.5"/>
+        <text x="300" y="404" fill="rgba(255,255,255,.75)" font-family="Space Grotesk" font-size="11">GOLDEN BOOSTER</text>
+        <path d="M380 60 a14 6 0 1 1 -0.1 0" fill="none" stroke="rgba(255,255,255,.4)"/>
+      </svg>
+      {% elif loop.index0 == 1 %}
+      <svg viewBox="0 0 522 420" aria-hidden="true">
+        <rect class="ln dim" x="130" y="40" width="260" height="340"/>
+        <rect class="ln" x="146" y="120" width="228" height="150" rx="6"/>
+        <path class="ln" d="M146 150 H374 M146 166 H374 M146 182 H374"/>
+        <path class="oil" d="M130 120 H146 V270 H130Z M374 120 H390 V270 H374Z"/>
+        <path class="ln dash" d="M60 160 H126 M394 160 H462"/><circle class="dt" cx="60" cy="160" r="2.5"/><circle class="dt" cx="462" cy="160" r="2.5"/>
+        <text x="40" y="146" fill="rgba(255,255,255,.6)" font-family="Space Grotesk" font-size="11">GAP SEALED</text>
+        <path class="ln dim" d="M260 270 V360"/><circle class="ln" cx="260" cy="360" r="10"/>
+      </svg>
+      {% elif loop.index0 == 2 %}
+      <svg viewBox="0 0 522 420" aria-hidden="true">
+        <circle class="ln" cx="220" cy="210" r="120"/><circle class="ln dim" cx="220" cy="210" r="90"/>
+        <path class="oil" d="M100 210 a120 120 0 0 1 240 0 h-10 a110 110 0 0 0 -220 0z"/>
+        <path class="oil" d="M100 210 a120 120 0 0 0 240 0 h-10 a110 110 0 0 1 -220 0z" opacity=".6"/>
+        <path class="ln dash" d="M340 210 H440"/><path class="ln" d="M450 100 V320"/>
+        <path class="ln dim" d="M442 120 h16 M442 160 h10 M442 200 h16 M442 240 h10 M442 280 h16"/>
+        <text x="410" y="90" fill="rgba(255,255,255,.65)" font-family="Space Grotesk" font-size="11">−40°C</text>
+        <circle class="dt" cx="340" cy="210" r="2.5"/>
+      </svg>
+      {% else %}
+      <svg viewBox="0 0 522 420" aria-hidden="true">
+        <path class="ln dim" d="M60 360 H470 M60 360 V50"/>
+        <path class="ln dash" d="M60 300 C 160 290 260 270 460 250"/>
+        <path class="ln" d="M60 300 C 140 260 240 150 460 110"/>
+        <circle class="dt" cx="460" cy="110" r="3"/><circle class="dt" cx="460" cy="250" r="2" opacity=".5"/>
+        <text x="380" y="98" fill="rgba(255,255,255,.75)" font-family="Space Grotesk" font-size="11">TORQUE ↑</text>
+        <text x="380" y="272" fill="rgba(255,255,255,.45)" font-family="Space Grotesk" font-size="11">FRICTION ↓</text>
+      </svg>
+      {% endif %}
+    </div>
+    <div><div class="k">{{ ch.k }} / 04</div><h2>{{ ch.h }}</h2><p>{{ ch.p }}</p></div>
+  </article>
+  {% endfor %}
+</section>
+
+<section class="wrap compare">
+  <div class="eyebrow muted" style="margin-bottom:16px">{{ t.compare_eyebrow }}</div>
+  <h2 class="serif h-sec">{{ t.compare_h }}</h2>
+  <table class="ctable">
+    <thead><tr><th></th><th>{{ t.compare_normal }}</th><th>{{ t.compare_gb }}</th></tr></thead>
+    <tbody>{% for r in t.compare_rows %}<tr><td>{{ r[0] }}</td><td>{{ r[1] }}</td><td class="gb">{{ r[2] }}</td></tr>{% endfor %}</tbody>
+  </table>
+</section>
+
+<section class="wrap" style="padding-bottom:160px">{{ stage(t) }}</section>
+
+<section class="wrap assure">
+  <svg width="40" height="44" viewBox="0 0 40 44" aria-hidden="true"><path d="M20 2 L36 8 V22 C36 32 28 39 20 42 C12 39 4 32 4 22 V8 Z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M13 22 l5 5 l9 -10" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+  <h2 class="serif">{{ t.assure_h }}</h2>
+  <p>{{ t.assure_p }}</p>
+  <div class="logos">
+    <div class="reticle">API<small>SP</small></div><div class="reticle">ILSAC<small>GF-6A</small></div>
+    <div class="reticle">ACEA<small>C5/C6</small></div><div class="reticle">MB<small>229.71</small></div>
+    <div class="reticle">BMW<small>LL-17 FE+</small></div><div class="reticle">dexos<small>D</small></div>
+  </div>
+  <p style="margin-top:48px"><a class="btn dark" href="{{ url('catalog') }}">{{ t.view_products }}</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% from "_macros.html" import stage %}
+{% block head %}<link rel="preload" as="image" href="/assets/main_visual_01.jpg">{% endblock %}
+{% block content %}
+<section class="hero" aria-label="Golden Booster">
+  <img src="/assets/main_visual_01.jpg" alt="" fetchpriority="high" width="1720" height="650">
+  <div class="shade"></div>
+  <div class="grain"></div>
+  <svg class="instr" viewBox="0 0 1720 650" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g stroke="rgba(255,255,255,.55)" stroke-width=".8" fill="none" stroke-dasharray="3 4">
+      <path d="M1290 250 L1220 150 L1060 150"/><path d="M1180 470 L1250 585 L1420 585"/><path d="M1340 330 L1385 300"/>
+    </g>
+    <g fill="#fff"><circle cx="1290" cy="250" r="2.2"/><circle cx="1180" cy="470" r="2.2"/><circle cx="1340" cy="330" r="2.2"/></g>
+    <circle cx="1290" cy="250" r="9" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".8"/>
+    <text x="1062" y="142">OIL FILM · VISCO-ELASTIC</text>
+    <text x="1062" y="166" opacity=".6">0W-20 · 100% PAO</text>
+    <text x="1262" y="577">API SP · ACEA C5/C6</text>
+    <text x="1388" y="296">−40°C</text>
+    <g stroke="rgba(255,255,255,.4)" stroke-width=".8"><path d="M1400 320 v120"/><path d="M1394 320 h12 M1394 350 h8 M1394 380 h12 M1394 410 h8 M1394 440 h12"/></g>
+  </svg>
+  <div class="hero-copy"><div class="wrap"><div class="inner">
+    <div class="eyebrow"><i class="dotg"></i><span>{{ t.eyebrow_official }}</span></div>
+    <h1 class="serif">{{ t.hero_h1 }}</h1>
+    <p>{{ t.hero_p }}</p>
+    <a class="btn" href="{{ url('catalog') }}">{{ t.view_products }}</a>
+  </div></div></div>
+</section>
+
+<section class="strip wrap" aria-label="{{ t.standards }}">
+  <div class="eyebrow">{{ t.standards }}</div>
+  <div class="logos">
+    <div class="reticle">API<small>SP</small></div><div class="reticle">ILSAC<small>GF-6A</small></div>
+    <div class="reticle">ACEA<small>C5/C6</small></div><div class="reticle">ISO<small>14001</small></div>
+    <div class="reticle">KS<small>KOREA</small></div><div class="reticle">MADE IN<small>KOREA</small></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="band"><div class="cloud"></div><div class="vig"></div><div class="grain"></div>
+    <div class="band-c">
+      <h2 class="serif">{{ t.band_h }}</h2>
+      <p>{{ t.band_p }}</p>
+      <a class="btn" href="{{ url('technology') }}">{{ t.how_it_works }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="reading wrap">
+  <div class="eyebrow">WORLD OIL KOREA · 2006</div>
+  <p class="serif" id="readP">{% for ph in t.reading %}<span>{{ ph }}</span> {% endfor %}</p>
+</section>
+
+<section class="sec">
+  <div class="wrap sec-head">
+    <div><div class="eyebrow">{{ t.series_eyebrow }}</div><h2 class="serif">{{ t.series_h }}</h2></div>
+    <div class="arrows"><button data-rail="series" data-d="-1" aria-label="←">←</button><button data-rail="series" data-d="1" aria-label="→">→</button></div>
+  </div>
+  <div class="rail" data-rail-id="series">
+    {% for s in series %}
+    <a class="card{{ ' sel' if loop.first }}" href="{{ url('catalog/' ~ s.first.slug) }}">
+      <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+      <span class="sdot" style="background:{{ s.color }}"></span>
+      <div class="shot"><img src="/assets/products/{{ s.image }}" alt="Golden Booster {{ s.key }}" loading="lazy" width="469" height="408"></div>
+      <div class="meta"><div class="eyebrow"><span>{{ '%02d'|format(loop.index) }} · {{ s.key }}</span><span>{{ s.tag }}</span></div>
+        <h3 class="serif">{{ s[lang] }}</h3>
+        <div class="grades">{{ s.grades }}</div>
+        <span class="go">{{ t.learn_more }} →</span></div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="bridge wrap">
+  <svg id="particles" viewBox="0 0 1200 260" aria-hidden="true"></svg>
+  <div class="eyebrow">{{ t.problem_eyebrow }}</div>
+  <h2 class="serif">{{ t.problem_h }}</h2>
+  <p>{{ t.problem_p }}</p>
+</section>
+
+<section class="wrap">{{ stage(t) }}</section>
+
+<section class="wrap proof">
+  <div class="side"><div class="eyebrow">{{ t.facts_eyebrow }}</div><h2 class="serif">{{ t.facts_h }}</h2><p>{{ t.facts_p }}</p></div>
+  <div class="mgrid">
+    {% set metrics = [('2006', '', t.m_founded), ('2017', '', t.m_plant), (products|length, '', t.m_products), (cats|length, '', t.m_cats), ('1–1000', 'L', t.m_pack), (series|length, '', t.m_series)] %}
+    {% for v, u, l in metrics %}
+    <div class="cell"><div class="bracket"></div><div class="in"><div class="num">{{ v }}{% if u %}<small>{{ u }}</small>{% endif %}</div><div class="eyebrow">{{ l }}</div></div>{% if loop.index > 4 %}<div class="bracket bottom"></div>{% endif %}</div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap sec">
+  <div class="eyebrow muted" style="margin-bottom:16px">{{ t.cats_eyebrow }}</div>
+  <h2 class="serif h-sec">{{ t.cats_h }}</h2>
+  <div class="cat-grid">
+    {% for c in cats %}<a class="cat" href="{{ url('catalog') }}#{{ c.slug }}"><span class="n">{{ c[lang] }}</span><span class="c">{{ '%02d'|format(c.count) }}</span></a>{% endfor %}
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap sec-head">
+    <div><div class="eyebrow">{{ t.world_eyebrow }}</div><h2 class="serif">{{ t.world_h }}</h2></div>
+    <div class="arrows"><button data-rail="world" data-d="-1" aria-label="←">←</button><button data-rail="world" data-d="1" aria-label="→">→</button></div>
+  </div>
+  <div class="rail" data-rail-id="world">
+    {% for w in t.world %}
+    <article class="wcard{{ ' sel' if loop.first }}"><img src="/assets/gallery/{{ w.img }}" alt="{{ w.h }}" loading="lazy"><div class="meta"><div class="eyebrow">{{ w.k }}</div><h3 class="serif">{{ w.h }}</h3></div></article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

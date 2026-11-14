@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ t.comp_title }}{% endblock %}
+{% block desc %}{{ t.comp_desc }}{% endblock %}
+{% block content %}
+<section class="dark-open">
+  <div class="wrap" style="position:relative">
+    <div class="eyebrow">{{ t.comp_eyebrow }}</div>
+    <h1 class="serif">{{ t.comp_h1 }}</h1>
+  </div>
+</section>
+
+<section class="dark-sec on-dark dark-rules">
+  <div class="wrap story">
+    <div><div class="eyebrow muted" style="margin-bottom:16px">2006 — 2026</div><h2 class="serif">{{ t.comp_story_h }}</h2></div>
+    <div class="body">{% for para in t.comp_story %}<p>{{ para }}</p>{% endfor %}</div>
+  </div>
+  <div class="wrap" style="padding-bottom:160px">
+    <figure class="plant"><img src="/assets/gallery/17483092009.jpg" alt="{{ t.plant_caption }}" loading="lazy"><figcaption class="cap">MIMS Automobility · 2025</figcaption></figure>
+  </div>
+</section>
+
+<section class="wrap timeline">
+  <div class="eyebrow muted" style="margin-bottom:16px">WORLD OIL KOREA</div>
+  <h2 class="serif h-sec">{{ t.timeline_h }}</h2>
+  <div class="bracket" style="margin-top:48px"></div>
+  <div class="tl" style="margin-top:0">
+    {% for y, txt in t.timeline %}<div class="tl-item"><div class="y">{{ y }}</div><p>{{ txt }}</p></div>{% endfor %}
+  </div>
+</section>
+
+<section class="wrap principles">
+  <h2 class="serif h-sec">{{ t.principles_h }}</h2>
+  <div class="pr-grid">
+    {% for h, txt in t.principles %}
+    <div class="pr">
+      <svg viewBox="0 0 205 180" aria-hidden="true">
+        <g stroke="#1a1714" stroke-opacity=".5" fill="none"><path d="M2 14 V2 H14 M191 2 H203 V14 M203 166 V178 H191 M14 178 H2 V166"/></g>
+        <g stroke="#1a1714" stroke-opacity=".45" fill="none">
+        {% if loop.index0 == 0 %}<path d="M20 90 C 50 40 70 40 102 90 S 155 140 185 90"/><circle cx="20" cy="90" r="3" fill="#1a1714"/><circle cx="185" cy="90" r="3" fill="#1a1714"/>
+        {% elif loop.index0 == 1 %}<rect x="40" y="35" width="125" height="110"/><rect x="70" y="60" width="65" height="60"/><path d="M40 35 L70 60 M165 35 L135 60 M165 145 L135 120 M40 145 L70 120"/>
+        {% elif loop.index0 == 2 %}<ellipse cx="102" cy="90" rx="80" ry="30"/><ellipse cx="102" cy="90" rx="55" ry="20"/><ellipse cx="102" cy="90" rx="28" ry="10"/><path d="M102 30 V150" stroke-dasharray="3 4"/>
+        {% else %}<circle cx="80" cy="90" r="45"/><circle cx="125" cy="90" r="45"/><circle cx="102" cy="90" r="3" fill="#1a1714"/>{% endif %}
+        </g>
+      </svg>
+      <h3>{{ h }}</h3><p>{{ txt }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap sec">
+  <h2 class="serif h-sec">{{ t.certs_h }}</h2>
+  <div class="logos" style="margin-top:40px">
+    {% for c in t.certs %}<div class="reticle" style="font-size:13px">{{ c }}</div>{% endfor %}
+    <div class="reticle" style="font-size:13px">API · ACEA</div><div class="reticle" style="font-size:13px">MADE IN KOREA</div>
+  </div>
+</section>
+
+<section class="wrap sec">
+  <h2 class="serif h-sec">{{ t.logistics_h }}</h2>
+  <div class="logi">
+    {% for v, l in t.logistics %}<div class="cell"><div class="bracket"></div><div class="in"><div class="num">{{ v }}</div><div class="eyebrow">{{ l }}</div></div><div class="bracket bottom"></div></div>{% endfor %}
+  </div>
+</section>
+
+<section class="dark-sec invite">
+  <svg viewBox="0 0 816 420" aria-hidden="true">
+    <ellipse cx="408" cy="210" rx="400" ry="150" fill="none" stroke="rgba(255,255,255,.2)"/>
+    <ellipse cx="408" cy="210" rx="260" ry="200" fill="none" stroke="rgba(255,255,255,.12)" stroke-dasharray="3 6"/>
+    <path d="M0 210 H60 M756 210 H816" stroke="rgba(255,255,255,.3)"/><circle cx="60" cy="210" r="2.5" fill="#fff"/><circle cx="756" cy="210" r="2.5" fill="#fff"/>
+  </svg>
+  <div class="wrap" style="position:relative">
+    <div class="eyebrow">[ {{ t.cta_dealer }} ]</div>
+    <h2 class="serif">{{ t.invite_h }}</h2>
+    <a class="btn" href="{{ url('contacts') }}">{{ t.cta_dealer }}</a>
+    <p class="note">{{ t.invite_note }}</p>
+  </div>
+</section>
+{% endblock %}

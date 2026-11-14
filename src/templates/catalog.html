@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_macros.html" import pcard %}
+{% block title %}{{ t.cat_title }}{% endblock %}
+{% block desc %}{{ t.cat_desc }}{% endblock %}
+{% block content %}
+<section class="wrap page-head">
+  <div class="crumbs"><a href="{{ url() }}">{{ t.crumb_home }}</a><span>/</span><span>{{ t.nav_catalog }}</span></div>
+  <div class="eyebrow">{{ t.cat_eyebrow|replace('{n}', products|length|string) }}</div>
+  <h1 class="serif">{{ t.cat_h1 }}</h1>
+  <p>{{ t.cat_lead }}</p>
+</section>
+
+<section class="wrap sec" id="catalog">
+  <div class="filters">
+    <div class="chips" role="group" aria-label="{{ t.category }}">
+      <button class="chip on" data-cat="all" aria-pressed="true">{{ t.filter_all }} <small>{{ products|length }}</small></button>
+      {% for c in cats %}<button class="chip" data-cat="{{ c.slug }}" aria-pressed="false">{{ c[lang] }} <small>{{ c.count }}</small></button>{% endfor %}
+    </div>
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="{{ t.search }}" aria-label="{{ t.search }}" autocomplete="off">
+    </label>
+    <div class="count-line"><span id="count">{{ products|length }}</span> {{ t.found }}</div>
+  </div>
+
+  {% for c in cats %}
+  <div class="cat-block" id="{{ c.slug }}">
+    <h2>{{ c[lang] }} <small>{{ '%02d'|format(c.count) }}</small></h2>
+    <div class="pgrid">
+      {% for p in products if p.cat.id == c.id %}{{ pcard(p, lang, url) }}{% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+  <p class="empty" id="empty" hidden>{{ t.empty }}</p>
+</section>
+{% endblock %}

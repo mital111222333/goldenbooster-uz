@@ -1,0 +1,6 @@
+dist/
+research/
+preview/
+__pycache__/
+node_modules/
+.wrangler/

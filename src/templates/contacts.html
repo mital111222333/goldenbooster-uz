@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ t.con_title }}{% endblock %}
+{% block desc %}{{ t.con_desc }}{% endblock %}
+{% block content %}
+<section class="wrap page-head">
+  <div class="crumbs"><a href="{{ url() }}">{{ t.crumb_home }}</a><span>/</span><span>{{ t.nav_contacts }}</span></div>
+  <div class="eyebrow">{{ t.con_eyebrow }}</div>
+  <h1 class="serif">{{ t.con_h1 }}</h1>
+  <p>{{ t.con_lead }}</p>
+</section>
+
+<section class="wrap contact-grid">
+  <form class="form" id="lead" novalidate
+        data-endpoint="{{ cfg.form_endpoint }}" data-telegram="{{ cfg.telegram }}"
+        data-ok="{{ t.f_ok }}" data-err="{{ t.f_err }}" data-fallback="{{ t.f_fallback }}"
+        data-subject="goldenbooster.uz — {{ t.request_price }}">
+    <div class="field"><label for="f-name">{{ t.f_name }}</label><input id="f-name" name="name" required autocomplete="name"></div>
+    <div class="field"><label for="f-phone">{{ t.f_phone }}</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel" placeholder="+998"></div>
+    <div class="field"><label for="f-city">{{ t.f_city }}</label><input id="f-city" name="city" autocomplete="address-level1"></div>
+    <fieldset class="field" style="border:0"><legend style="font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;opacity:.6;margin-bottom:8px">{{ t.f_type }}</legend>
+      <div class="types">{% for ty in t.f_types %}<label><input type="radio" name="type" value="{{ ty }}"{{ ' checked' if loop.first }}><span>{{ ty }}</span></label>{% endfor %}</div>
+    </fieldset>
+    <div class="field"><label for="f-product">{{ t.f_product }}</label>
+      <input id="f-product" name="product" list="plist">
+      <datalist id="plist">{% for p in products %}<option value="{{ p.name }}">{% endfor %}</datalist></div>
+    <div class="field"><label for="f-msg">{{ t.f_message }}</label><textarea id="f-msg" name="message" rows="3"></textarea></div>
+    <div><button class="btn dark" type="submit">{{ t.f_submit }}</button></div>
+    <p class="msg" role="status" aria-live="polite"></p>
+  </form>
+
+  <div class="cinfo">
+    <div class="bracket"></div>
+    <div class="row"><div class="eyebrow">{{ t.c_phone }}</div>{% for ph in cfg.phones %}<a class="v" style="display:block" href="tel:{{ ph|replace(' ','')|replace('-','') }}">{{ ph }}</a>{% endfor %}</div>
+    {% if cfg.email %}<div class="row"><div class="eyebrow">{{ t.c_email }}</div><a class="v" href="mailto:{{ cfg.email }}">{{ cfg.email }}</a></div>{% endif %}
+    <div class="row"><div class="eyebrow">{{ t.c_address }}</div><div class="v">{{ cfg.address[lang] }}</div></div>
+    <div class="row"><div class="eyebrow">{{ t.c_hours }}</div><div class="v">{{ cfg.hours[lang] }}</div></div>
+    {% if cfg.telegram or cfg.instagram %}
+    <div class="row"><div class="eyebrow">{{ t.c_social }}</div>
+      {% if cfg.telegram %}<a class="v" href="https://t.me/{{ cfg.telegram }}" rel="noopener">Telegram</a>{% endif %}
+      {% if cfg.instagram %}<a class="v" href="https://instagram.com/{{ cfg.instagram }}" rel="noopener" style="margin-left:16px">Instagram</a>{% endif %}</div>
+    {% endif %}
+    <div class="bracket bottom"></div>
+  </div>
+</section>
+{% endblock %}
+{% block close %}{% endblock %}
