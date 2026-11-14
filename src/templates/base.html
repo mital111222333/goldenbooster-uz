@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/site.css?v=20261115">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"{{ t.site_name }}","url":"{{ site }}","logo":"{{ site }}/assets/footer_logo.png","brand":{"@type":"Brand","name":"Golden Booster"},"telephone":"{{ cfg.phones[0] }}"{% if cfg.email %},"email":"{{ cfg.email }}"{% endif %}}</script>
 {% block head %}{% endblock %}
 </head>
@@ -113,6 +113,6 @@
   <a href="{{ url('contacts') }}" class="{{ 'on' if page == 'contacts' }}"><i>✆</i>{{ t.nav_contacts }}</a>
 </nav>
 <div class="glass-ctl" id="gctl"><div class="glass-pop"><label>Liquid Glass<input type="range" id="grange" min="0" max="100" value="55" aria-label="Liquid Glass"></label></div><button type="button" id="gbtn" aria-label="Liquid Glass">◐</button></div>
-<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/site.js?v=20261115" defer></script>
 </body>
 </html>
