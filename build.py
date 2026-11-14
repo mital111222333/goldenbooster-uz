@@ -4,6 +4,7 @@ Usage:  python build.py        -> writes the site into ./dist
 Data:   src/data/products_source.json (scraped EN+RU), uz.json, ru_extra.json, i18n.json, config.json
 """
 import json
+import os
 import re
 import shutil
 from pathlib import Path
@@ -13,6 +14,15 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 ROOT = Path(__file__).parent
 SRC, DIST = ROOT / "src", ROOT / "dist"
 LANGS = ["uz", "ru"]
+# Path prefix when served from a sub-folder (GitHub Pages project URL); empty on the real domain.
+BASE = os.environ.get("SITE_BASE", "").rstrip("/")
+
+
+def rebase(html):
+    """Prefix root-relative href/src with BASE so the site also works under /<repo>/."""
+    if not BASE:
+        return html
+    return re.sub(r'((?:href|src)=")/(?!/)', r"\g<1>" + BASE + "/", html)
 
 
 def load(name):
@@ -191,9 +201,9 @@ def render_all():
             html = env.get_template(tpl).render(**ctx(lang, path, extra))
             out = DIST / url(lang, path).lstrip("/") / "index.html"
             out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_text(html, encoding="utf-8")
+            out.write_text(rebase(html), encoding="utf-8")
             sitemap.append(CFG["site_url"] + url(lang, path))
-    (DIST / "404.html").write_text(env.get_template("404.html").render(**ctx("uz", "", {"page": "404"})),
+    (DIST / "404.html").write_text(rebase(env.get_template("404.html").render(**ctx("uz", "", {"page": "404"}))),
                                    encoding="utf-8")
     (DIST / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

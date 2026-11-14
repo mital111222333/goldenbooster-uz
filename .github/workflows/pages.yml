@@ -22,8 +22,12 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
+      - id: pages
+        uses: actions/configure-pages@v5
+      # base_path is "/goldenbooster-uz" on github.io and "" once a custom domain is set
       - run: python build.py
-      - uses: actions/configure-pages@v5
+        env:
+          SITE_BASE: ${{ steps.pages.outputs.base_path }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
