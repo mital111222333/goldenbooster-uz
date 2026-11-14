@@ -72,7 +72,7 @@
   if (ps) {
     var ns = "http://www.w3.org/2000/svg", seed = 7;
     var rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
-    for (var i = 0; i < 900; i++) {
+    for (var i = 0; i < 350; i++) {
       var t = rnd(), x = 60 + t * 1080, crown = Math.sin(t * Math.PI);
       var y = 230 - crown * 170 + (rnd() - 0.5) * (30 + 60 * crown) * rnd();
       if (rnd() > 0.25 + crown * 0.75) continue;

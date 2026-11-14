@@ -199,7 +199,7 @@ section.wrap:has(>.band){padding-top:30px}
 .cat-block>h2 small{font-size:15px;font-weight:500;color:var(--muted)}
 .pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .pcard{display:flex;flex-direction:column;background:var(--card);border-radius:24px;padding:12px;transition:transform .5s var(--ease),box-shadow .4s}
-.pcard:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(233,181,74,.12)}
+.pcard:hover{transform:translateY(-6px);box-shadow:0 10px 24px rgba(233,181,74,.1)}
 .pcard .meta{padding:16px 8px 8px;display:flex;flex-direction:column;gap:6px}
 .pcard .eyebrow{justify-content:space-between;font-size:12px}
 .pcard .eyebrow span:last-child{color:var(--muted)}
@@ -395,16 +395,19 @@ body.page-contacts .close,body.page-404 .close{margin-top:0}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
 
 /* ===== iOS 27 · Liquid Glass layer ===== */
-:root{--g:.55;--glass-bg:rgba(255,255,255,calc(.045 + var(--g)*.12));--glass-blur:blur(calc(10px + var(--g)*26px)) saturate(180%);--edge:rgba(255,255,255,.2);--sh:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.05),0 12px 40px rgba(0,0,0,.35)}
+:root{--g:.55;--glass-bg:rgba(255,255,255,calc(.045 + var(--g)*.12));--glass-blur:blur(calc(8px + var(--g)*16px)) saturate(160%);--edge:rgba(255,255,255,.2);--sh:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.05),0 12px 40px rgba(0,0,0,.35)}
 html{background:#05060a}
 body{background:transparent;position:relative}
-body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+body::before{content:"";position:fixed;will-change:transform;transform:translateZ(0);inset:0;z-index:-1;background:
   radial-gradient(45% 35% at 85% 8%,rgba(233,181,74,.30),transparent 70%),
   radial-gradient(50% 40% at 8% 45%,rgba(120,90,255,.20),transparent 70%),
   radial-gradient(55% 40% at 90% 92%,rgba(233,181,74,.18),transparent 70%),
   radial-gradient(40% 30% at 20% 100%,rgba(70,140,255,.16),transparent 70%),#05060a}
-/* glass surfaces */
-.card,.pcard,.tile,.cell,.cat,.chip,.search,.reticle,.stage,.pr,.form,.cinfo,.feat li,.ctable,.diag,.pack span.v,.arrows button,.lang,.types span,.pd-req,.wcard,.band,.plant .cap,.nav,.mmenu,.filters{
+/* glass surfaces: cheap translucent fill (no blur) for the many cards */
+.card,.pcard,.tile,.cell,.cat,.chip,.search,.reticle,.stage,.pr,.form,.cinfo,.feat li,.ctable,.diag,.pack span.v,.arrows button,.types span,.pd-req,.wcard,.band,.close .fcols{
+  background:rgba(255,255,255,calc(.05 + var(--g)*.09));border:1px solid var(--edge);box-shadow:inset 0 1px 0 rgba(255,255,255,.28)}
+/* real Liquid Glass (blur) only on a handful of floating surfaces */
+.nav,.mmenu,.filters,.lang,.dock,.glass-ctl button,.hero .eyebrow,.btn.ghost{
   background:var(--glass-bg);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid var(--edge);box-shadow:var(--sh)}
 .stage,.band,.diag{background:linear-gradient(160deg,rgba(233,181,74,.10),rgba(255,255,255,.03))}
 .card:hover,.pcard:hover,.tile:hover,.cat:hover{background:rgba(255,255,255,calc(.08 + var(--g)*.14))}
@@ -412,7 +415,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:
 .chip.on,.types input:checked+span,.lang a.on{background:linear-gradient(180deg,#f5d88a,#e9b54a);color:#1a1200;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
 .btn{background:linear-gradient(180deg,#f5d88a,#e9b54a);border:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 8px 26px rgba(233,181,74,.4)}
 .btn:hover{background:linear-gradient(180deg,#fbe5a6,#f0be55);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 10px 34px rgba(233,181,74,.55)}
-.btn.ghost{background:var(--glass-bg);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid var(--edge);color:#fff;box-shadow:var(--sh)}
+.btn.ghost{color:#fff}
 .btn.ghost:hover{color:var(--gold-soft)}
 /* floating pill nav */
 .nav{top:12px;left:12px;right:12px;height:56px;border-radius:999px;max-width:1240px;margin:0 auto;border-bottom:1px solid var(--edge)}
@@ -425,11 +428,11 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:
 .filters{border-radius:24px;padding:12px 14px;top:76px;margin-top:8px}
 .pd-img,.card .shot,.pcard .shot{background:linear-gradient(#fff,#e9e9ee)}
 .pd-img{box-shadow:var(--sh)}
-.card,.pcard{padding:10px}
+.card,.pcard{padding:10px;contain:layout paint}
 .card .shot,.pcard .shot{border-radius:24px}
 .card,.pcard,.tile,.cell,.pr,.form,.cinfo,.stage,.band,.diag,.wcard{border-radius:32px}
 .close{background:transparent}
-.close .fcols{background:var(--glass-bg);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid var(--edge);border-radius:32px;padding:36px;margin-top:10px;box-shadow:var(--sh)}
+.close .fcols{border-radius:32px;padding:36px;margin-top:10px}
 .fine,.meta-row{padding-left:8px}
 .field input,.field select,.field textarea{background:rgba(0,0,0,.35);border-color:var(--edge)}
 .ctable th{background:rgba(255,255,255,.04)}
@@ -456,4 +459,11 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:
   .hero-copy{padding-top:100px}
   .filters{top:66px}
   .close{margin-top:70px}.close .fcols{padding:24px}
+}
+
+@media (max-width:768px){
+  :root{--glass-blur:blur(12px) saturate(150%)}
+  .hero .eyebrow{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .card:hover,.pcard:hover,.tile:hover{transform:none}
+  .rv{transition-duration:.5s}
 }
